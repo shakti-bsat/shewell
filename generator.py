@@ -1,4 +1,13 @@
-import requests
+from google import genai
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+print("DEBUG KEY VALUE:", os.getenv("GEMINI_API_KEY"))
+print("DEBUG KEY LENGTH:", len(os.getenv("GEMINI_API_KEY")) if os.getenv("GEMINI_API_KEY") else "None")
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 def generate_answer(query, context):
     prompt = f"""
@@ -28,13 +37,9 @@ Question:
 
 Answer:
 """
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={
-            "model": "mistral",
-            "prompt": prompt,
-            "stream": False
-        }
+    response = client.models.generate_content(
+        model="gemini-1.5-flash",
+        contents=prompt
     )
 
-    return response.json()["response"]
+    return response.text
