@@ -2,9 +2,11 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route("/", methods=["POST"])
+@app.route("/api/chat", methods=["POST"])
 def chat():
-    data = request.json
-    return jsonify({"response": "ok"})
+    data = request.get_json()
+    message = data.get("message", "")
+    return jsonify({"response": f"You said: {message}"})
 
-app = app
+# IMPORTANT: This must exist for Vercel
+handler = app
