@@ -457,7 +457,7 @@
         appendMsg(data.answer || data.response || 'Sorry, I could not get a response.', 'bot');
       } catch (err) {
         removeTyping();
-        appendMsg("⚠️ Couldn't reach the assistant. Make sure your backend server is running on localhost:5000.", 'bot');
+        appendMsg("⚠️ Couldn't reach the assistant. Please try again in a moment.", 'bot');
       }
     }
   </script>
